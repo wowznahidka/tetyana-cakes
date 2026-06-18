@@ -1,362 +1,739 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Тетяна Колега — Торти на замовлення · Тернопіль</title>
-  <meta name="description" content="Авторські торти та десерти на замовлення у Тернополі. Кожен торт — ручна робота з любов'ю." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet" />
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Тетяна Колега — Авторські торти · Тернопіль</title>
+  <meta name="description" content="Авторські торти та десерти на замовлення у Тернополі. Кожен торт — ручна робота з любов'ю."/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
   <style>
     :root {
-      --cream: #fdf6f0;
-      --blush: #f5ddd3;
-      --rose: #d4896a;
-      --dark-rose: #a85c3f;
-      --brown: #3d2214;
-      --text: #2d1a0e;
-      --text-light: #7a5c4a;
-      --white: #fff;
-      --radius: 16px;
-      --shadow: 0 4px 32px rgba(61,34,20,.10);
+      --c1: #1a0a00;
+      --c2: #3d1f08;
+      --gold: #c9956b;
+      --gold2: #e8c4a0;
+      --cream: #fdf6ee;
+      --glass: rgba(255,255,255,0.06);
+      --glass-border: rgba(201,149,107,0.2);
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     html { scroll-behavior: smooth; }
+
     body {
-      font-family: 'Nunito', sans-serif;
-      background: var(--cream);
-      color: var(--text);
-      line-height: 1.6;
+      font-family: 'Inter', sans-serif;
+      background: var(--c1);
+      color: var(--cream);
+      overflow-x: hidden;
+      cursor: none;
     }
 
-    /* ── NAV ── */
+    /* ─── CUSTOM CURSOR ─── */
+    #cursor {
+      position: fixed; width: 12px; height: 12px;
+      background: var(--gold); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%,-50%);
+      transition: width .2s, height .2s, opacity .2s;
+      mix-blend-mode: difference;
+    }
+    #cursor-ring {
+      position: fixed; width: 40px; height: 40px;
+      border: 1px solid rgba(201,149,107,.5); border-radius: 50%;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%,-50%);
+      transition: transform .08s ease, width .2s, height .2s;
+    }
+    body:hover #cursor { opacity: 1; }
+
+    /* ─── CANVAS BG ─── */
+    #bg-canvas {
+      position: fixed; inset: 0; z-index: 0;
+      pointer-events: none;
+    }
+
+    /* ─── NAV ─── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 24px;
-      background: rgba(253,246,240,.92);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(212,137,106,.15);
+      padding: 20px 48px;
+      background: rgba(26,10,0,.4);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--glass-border);
     }
     .nav-logo {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.2rem;
-      color: var(--dark-rose);
-      text-decoration: none;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 400; letter-spacing: .1em;
+      color: var(--gold2); text-decoration: none;
     }
-    .nav-links { display: flex; gap: 24px; list-style: none; }
-    .nav-links a { text-decoration: none; color: var(--text-light); font-size: .9rem; font-weight: 600; transition: color .2s; }
-    .nav-links a:hover { color: var(--rose); }
+    .nav-links { display: flex; gap: 36px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: rgba(253,246,238,.6);
+      font-size: .8rem; letter-spacing: .15em; text-transform: uppercase;
+      transition: color .3s;
+    }
+    .nav-links a:hover { color: var(--gold2); }
     .nav-cta {
-      background: var(--rose); color: var(--white);
-      padding: 10px 20px; border-radius: 50px;
-      text-decoration: none; font-size: .9rem; font-weight: 600;
-      transition: background .2s, transform .15s;
+      padding: 10px 26px; border: 1px solid var(--gold);
+      color: var(--gold); text-decoration: none;
+      font-size: .8rem; letter-spacing: .15em; text-transform: uppercase;
+      transition: all .3s; border-radius: 2px;
     }
-    .nav-cta:hover { background: var(--dark-rose); transform: translateY(-1px); }
+    .nav-cta:hover { background: var(--gold); color: var(--c1); }
 
-    /* ── HERO ── */
+    /* ─── HERO ─── */
     .hero {
+      position: relative; z-index: 1;
       min-height: 100vh;
-      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
       text-align: center;
       padding: 120px 24px 80px;
-      background:
-        linear-gradient(180deg, rgba(253,246,240,.15) 0%, rgba(253,246,240,.85) 60%, var(--cream) 100%),
-        url('photos/hero.jpg') center/cover no-repeat;
+      overflow: hidden;
     }
-    .hero-badge {
-      display: inline-block;
-      background: var(--blush);
-      color: var(--dark-rose);
-      padding: 6px 18px;
-      border-radius: 50px;
-      font-size: .8rem;
-      font-weight: 600;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      margin-bottom: 20px;
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(201,149,107,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 12px;
+      font-size: .7rem; letter-spacing: .25em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 32px;
+      opacity: 0; transform: translateY(20px);
+      animation: fadeUp .8s .2s forwards;
+    }
+    .hero-eyebrow::before, .hero-eyebrow::after {
+      content: ''; display: block; width: 40px; height: 1px; background: var(--gold);
     }
     .hero h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.4rem, 8vw, 5rem);
-      line-height: 1.15;
-      color: var(--brown);
-      margin-bottom: 20px;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(3rem, 9vw, 7rem);
+      font-weight: 300; line-height: 1.05;
+      letter-spacing: -.01em;
+      color: var(--cream);
+      margin-bottom: 8px;
+      opacity: 0; transform: translateY(30px);
+      animation: fadeUp .9s .35s forwards;
     }
-    .hero h1 em { color: var(--rose); font-style: italic; }
-    .hero p {
-      font-size: clamp(1rem, 3vw, 1.2rem);
-      color: var(--text-light);
-      max-width: 520px;
-      margin: 0 auto 36px;
+    .hero h1 em {
+      font-style: italic; color: var(--gold2);
     }
-    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
-    .btn-primary {
-      background: var(--rose); color: var(--white);
-      padding: 16px 32px; border-radius: 50px;
-      text-decoration: none; font-size: 1rem; font-weight: 700;
-      transition: background .2s, transform .15s, box-shadow .2s;
-      box-shadow: 0 4px 20px rgba(212,137,106,.35);
+    .hero-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+      font-weight: 300; font-style: italic;
+      color: rgba(232,196,160,.7);
+      margin-bottom: 48px;
+      opacity: 0; transform: translateY(20px);
+      animation: fadeUp .8s .5s forwards;
     }
-    .btn-primary:hover { background: var(--dark-rose); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(212,137,106,.45); }
-    .btn-outline {
-      background: transparent; color: var(--rose);
-      padding: 16px 32px; border-radius: 50px;
-      text-decoration: none; font-size: 1rem; font-weight: 700;
-      border: 2px solid var(--rose);
-      transition: all .2s;
+    .hero-btns {
+      display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;
+      opacity: 0; transform: translateY(20px);
+      animation: fadeUp .8s .65s forwards;
     }
-    .btn-outline:hover { background: var(--rose); color: var(--white); }
+    .btn-gold {
+      padding: 16px 40px;
+      background: linear-gradient(135deg, var(--gold), #a07040);
+      color: var(--c1); text-decoration: none;
+      font-size: .85rem; letter-spacing: .12em; text-transform: uppercase; font-weight: 600;
+      border-radius: 2px;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 0 0 0 rgba(201,149,107,0);
+    }
+    .btn-gold:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(201,149,107,.4); }
+    .btn-outline2 {
+      padding: 16px 40px;
+      border: 1px solid rgba(201,149,107,.4);
+      color: var(--gold2); text-decoration: none;
+      font-size: .85rem; letter-spacing: .12em; text-transform: uppercase;
+      border-radius: 2px;
+      transition: all .3s;
+    }
+    .btn-outline2:hover { border-color: var(--gold2); background: rgba(201,149,107,.08); }
 
-    /* ── SECTION BASE ── */
-    section { padding: 80px 24px; }
-    .container { max-width: 1100px; margin: 0 auto; }
-    .section-label {
-      font-size: .8rem; font-weight: 700; letter-spacing: .12em;
-      text-transform: uppercase; color: var(--rose);
-      margin-bottom: 12px;
+    /* scroll indicator */
+    .scroll-hint {
+      position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      font-size: .65rem; letter-spacing: .2em; text-transform: uppercase;
+      color: rgba(201,149,107,.5);
+      opacity: 0; animation: fadeUp .8s 1.2s forwards;
     }
-    .section-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      color: var(--brown);
-      margin-bottom: 16px;
+    .scroll-line {
+      width: 1px; height: 48px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s infinite;
     }
-    .section-sub { color: var(--text-light); max-width: 560px; }
 
-    /* ── GALLERY ── */
-    #gallery { background: var(--white); }
+    /* ─── SECTION BASE ─── */
+    section { position: relative; z-index: 1; }
+    .reveal {
+      opacity: 0; transform: translateY(40px);
+      transition: opacity .8s ease, transform .8s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    .s-label {
+      font-size: .65rem; letter-spacing: .25em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 20px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .s-label::after { content: ''; flex: 0 0 60px; height: 1px; background: var(--gold); }
+    .s-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 300; line-height: 1.1;
+      color: var(--cream); margin-bottom: 20px;
+    }
+    .s-title em { font-style: italic; color: var(--gold2); }
+    .s-sub { color: rgba(253,246,238,.55); font-size: .95rem; line-height: 1.7; max-width: 560px; }
+
+    /* ─── ABOUT ─── */
+    .about { padding: 120px 48px; }
+    .about-inner {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .about-visual {
+      position: relative;
+      aspect-ratio: 3/4;
+      border-radius: 4px;
+      overflow: hidden;
+      background: var(--c2);
+    }
+    .about-visual::before {
+      content: '';
+      position: absolute; inset: -2px;
+      background: linear-gradient(135deg, var(--gold), transparent 60%);
+      z-index: 1; pointer-events: none;
+      border-radius: 4px;
+    }
+    .about-visual img { width: 100%; height: 100%; object-fit: cover; }
+    .about-visual .placeholder-img {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem; opacity: .2;
+    }
+    .about-float {
+      position: absolute; bottom: -24px; right: -24px; z-index: 2;
+      width: 160px; height: 160px;
+      background: var(--glass); backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border); border-radius: 4px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+      text-align: center;
+    }
+    .about-float .num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.8rem; line-height: 1; color: var(--gold2);
+    }
+    .about-float .lbl { font-size: .7rem; letter-spacing: .1em; color: rgba(253,246,238,.5); text-transform: uppercase; }
+
+    /* ─── SERVICES 3D CARDS ─── */
+    .services { padding: 120px 48px; background: rgba(0,0,0,.3); }
+    .services-inner { max-width: 1100px; margin: 0 auto; }
+    .services-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px; margin-top: 60px;
+    }
+    .s-card {
+      background: var(--glass);
+      border: 1px solid var(--glass-border);
+      border-radius: 4px;
+      padding: 40px 28px;
+      transition: transform .1s ease, box-shadow .3s;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+    .s-card:hover { box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 0 0 1px var(--gold); }
+    .s-icon {
+      font-size: 2rem; margin-bottom: 20px;
+      display: block;
+    }
+    .s-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem; font-weight: 400;
+      color: var(--gold2); margin-bottom: 12px;
+    }
+    .s-card p { color: rgba(253,246,238,.5); font-size: .9rem; line-height: 1.7; }
+
+    /* ─── GALLERY ─── */
+    .gallery { padding: 120px 48px; }
+    .gallery-inner { max-width: 1200px; margin: 0 auto; }
+    .gallery-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 60px; flex-wrap: wrap; gap: 20px; }
     .gallery-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 16px;
-      margin-top: 48px;
+      grid-template-columns: repeat(12, 1fr);
+      grid-template-rows: repeat(2, 280px);
+      gap: 12px;
     }
-    .gallery-item {
-      border-radius: var(--radius);
-      overflow: hidden;
-      aspect-ratio: 4/5;
-      background: var(--blush);
-      position: relative;
+    .g-item {
+      background: var(--c2); border-radius: 4px; overflow: hidden;
+      position: relative; cursor: pointer;
+      transition: transform .4s cubic-bezier(.25,.46,.45,.94);
     }
-    .gallery-item img {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      transition: transform .4s ease;
-    }
-    .gallery-item:hover img { transform: scale(1.04); }
-    .gallery-placeholder {
+    .g-item:hover { transform: scale(1.02); z-index: 2; }
+    .g-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .g-item .ph {
       width: 100%; height: 100%;
       display: flex; align-items: center; justify-content: center;
-      color: var(--rose); font-size: .9rem; opacity: .5;
+      background: linear-gradient(135deg, var(--c2), rgba(61,31,8,.5));
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem; color: rgba(201,149,107,.4); letter-spacing: .1em;
     }
+    .g-item:nth-child(1) { grid-column: span 5; grid-row: span 2; }
+    .g-item:nth-child(2) { grid-column: span 4; }
+    .g-item:nth-child(3) { grid-column: span 3; }
+    .g-item:nth-child(4) { grid-column: span 3; }
+    .g-item:nth-child(5) { grid-column: span 4; }
+    .g-item:nth-child(6) { grid-column: span 3; }
+    .g-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(26,10,0,.8) 0%, transparent 60%);
+      opacity: 0; transition: opacity .3s;
+      display: flex; align-items: flex-end; padding: 20px;
+    }
+    .g-item:hover .g-overlay { opacity: 1; }
+    .g-overlay span { font-family: 'Cormorant Garamond', serif; font-size: .9rem; color: var(--gold2); letter-spacing: .1em; }
 
-    /* ── SERVICES ── */
-    .services-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-      gap: 20px;
-      margin-top: 48px;
+    /* ─── HOW TO ORDER ─── */
+    .how { padding: 120px 48px; }
+    .how-inner { max-width: 1100px; margin: 0 auto; }
+    .steps-row {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1px; margin-top: 60px;
+      border: 1px solid var(--glass-border); border-radius: 4px; overflow: hidden;
     }
-    .service-card {
-      background: var(--white);
-      border-radius: var(--radius);
-      padding: 32px 24px;
-      text-align: center;
-      box-shadow: var(--shadow);
-      transition: transform .2s, box-shadow .2s;
+    .step-box {
+      padding: 48px 36px;
+      background: var(--glass); backdrop-filter: blur(10px);
+      border-right: 1px solid var(--glass-border);
+      transition: background .3s;
     }
-    .service-card:hover { transform: translateY(-4px); box-shadow: 0 8px 40px rgba(61,34,20,.14); }
-    .service-icon { font-size: 2.4rem; margin-bottom: 16px; }
-    .service-card h3 {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.3rem; color: var(--brown); margin-bottom: 8px;
+    .step-box:last-child { border-right: none; }
+    .step-box:hover { background: rgba(201,149,107,.07); }
+    .step-num-big {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 5rem; font-weight: 300; line-height: 1;
+      color: rgba(201,149,107,.15); margin-bottom: 24px;
     }
-    .service-card p { color: var(--text-light); font-size: .95rem; }
+    .step-box h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.3rem; font-weight: 400;
+      color: var(--gold2); margin-bottom: 12px;
+    }
+    .step-box p { color: rgba(253,246,238,.5); font-size: .9rem; line-height: 1.7; }
 
-    /* ── HOW TO ORDER ── */
-    #order { background: var(--blush); }
-    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; margin-top: 48px; }
-    .step { text-align: center; }
-    .step-num {
-      width: 56px; height: 56px; border-radius: 50%;
-      background: var(--rose); color: var(--white);
-      font-family: 'Playfair Display', serif;
-      font-size: 1.4rem; font-weight: 700;
-      display: flex; align-items: center; justify-content: center;
-      margin: 0 auto 16px;
+    /* ─── CONTACT ─── */
+    .contact { padding: 120px 48px; }
+    .contact-inner { max-width: 900px; margin: 0 auto; text-align: center; }
+    .contact-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-weight: 300; line-height: 1.1;
+      color: var(--cream); margin-bottom: 24px;
     }
-    .step h3 { font-size: 1.1rem; color: var(--brown); margin-bottom: 8px; }
-    .step p { color: var(--text-light); font-size: .9rem; }
+    .contact-title em { font-style: italic; color: var(--gold2); }
+    .contact-sub { color: rgba(253,246,238,.5); margin-bottom: 56px; font-size: 1rem; line-height: 1.7; }
+    .socials { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .soc-btn {
+      display: flex; align-items: center; gap: 12px;
+      padding: 18px 32px;
+      background: var(--glass); backdrop-filter: blur(10px);
+      border: 1px solid var(--glass-border); border-radius: 2px;
+      color: var(--gold2); text-decoration: none;
+      font-size: .85rem; letter-spacing: .1em; text-transform: uppercase;
+      transition: all .3s;
+    }
+    .soc-btn:hover { background: rgba(201,149,107,.15); border-color: var(--gold); transform: translateY(-3px); }
+    .soc-btn svg { width: 18px; height: 18px; fill: currentColor; flex-shrink: 0; }
 
-    /* ── CONTACT ── */
-    #contact { text-align: center; }
-    .contact-box {
-      background: var(--brown);
-      border-radius: 24px;
-      padding: 64px 32px;
-      color: var(--white);
-      margin-top: 48px;
+    /* ─── MARQUEE ─── */
+    .marquee-wrap {
+      overflow: hidden; padding: 32px 0;
+      border-top: 1px solid var(--glass-border);
+      border-bottom: 1px solid var(--glass-border);
     }
-    .contact-box h2 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(1.8rem, 4vw, 2.8rem);
-      margin-bottom: 16px;
+    .marquee-track {
+      display: flex; gap: 48px; width: max-content;
+      animation: marquee 20s linear infinite;
     }
-    .contact-box p { color: rgba(255,255,255,.7); margin-bottom: 36px; font-size: 1.05rem; }
-    .social-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
-    .social-btn {
-      display: flex; align-items: center; gap: 10px;
-      background: rgba(255,255,255,.12);
-      color: var(--white);
-      padding: 14px 24px; border-radius: 50px;
-      text-decoration: none; font-weight: 600; font-size: .95rem;
-      border: 1px solid rgba(255,255,255,.2);
-      transition: background .2s, transform .15s;
+    .marquee-item {
+      white-space: nowrap;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem; font-weight: 300; font-style: italic;
+      color: rgba(201,149,107,.4); letter-spacing: .1em;
+      display: flex; align-items: center; gap: 48px;
     }
-    .social-btn:hover { background: rgba(255,255,255,.22); transform: translateY(-2px); }
-    .social-btn svg { width: 20px; height: 20px; fill: currentColor; }
+    .marquee-item::after { content: '✦'; color: var(--gold); font-size: .7rem; font-style: normal; }
 
-    /* ── FOOTER ── */
+    /* ─── FOOTER ─── */
     footer {
-      text-align: center; padding: 32px 24px;
-      color: var(--text-light); font-size: .85rem;
-      border-top: 1px solid var(--blush);
+      padding: 40px 48px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-top: 1px solid var(--glass-border);
+      color: rgba(253,246,238,.3); font-size: .8rem;
+    }
+    footer a { color: var(--gold); text-decoration: none; }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes scrollPulse {
+      0%,100% { transform: scaleY(1); opacity: 1; }
+      50% { transform: scaleY(.6); opacity: .4; }
+    }
+    @keyframes marquee {
+      from { transform: translateX(0); }
+      to { transform: translateX(-50%); }
+    }
+    @keyframes float {
+      0%,100% { transform: translateY(0) rotate(0deg); }
+      33% { transform: translateY(-15px) rotate(2deg); }
+      66% { transform: translateY(-8px) rotate(-1deg); }
     }
 
-    /* ── MOBILE ── */
-    @media (max-width: 600px) {
+    /* ─── MOBILE ─── */
+    @media (max-width: 768px) {
+      nav { padding: 16px 20px; }
       .nav-links { display: none; }
-      .hero { padding: 100px 20px 60px; }
+      .about { padding: 80px 20px; }
+      .about-inner { grid-template-columns: 1fr; gap: 40px; }
+      .services { padding: 80px 20px; }
+      .gallery { padding: 80px 20px; }
+      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .g-item:nth-child(n) { grid-column: span 1 !important; grid-row: span 1 !important; }
+      .how { padding: 80px 20px; }
+      .steps-row { grid-template-columns: 1fr; }
+      .step-box { border-right: none; border-bottom: 1px solid var(--glass-border); }
+      .contact { padding: 80px 20px; }
+      footer { flex-direction: column; gap: 12px; text-align: center; padding: 32px 20px; }
     }
   </style>
 </head>
 <body>
 
+  <!-- Custom Cursor -->
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+
+  <!-- 3D Canvas Background -->
+  <canvas id="bg-canvas"></canvas>
+
   <!-- NAV -->
   <nav>
-    <a class="nav-logo" href="#">Тетяна Колега 🎂</a>
+    <a class="nav-logo" href="#">Тетяна Колега</a>
     <ul class="nav-links">
       <li><a href="#gallery">Роботи</a></li>
-      <li><a href="#services">Що роблю</a></li>
-      <li><a href="#order">Як замовити</a></li>
+      <li><a href="#services">Послуги</a></li>
+      <li><a href="#how">Замовити</a></li>
     </ul>
-    <a class="nav-cta" href="#contact">Замовити</a>
+    <a class="nav-cta" href="#contact">Зв'язатись</a>
   </nav>
 
   <!-- HERO -->
   <section class="hero">
-    <span class="hero-badge">📍 Тернопіль · З любов'ю до деталей</span>
-    <h1>Торти що <em>вражають</em><br>з першого погляду</h1>
-    <p>Авторські торти на замовлення — для весіль, днів народження та будь-якого свята. Кожен торт унікальний.</p>
+    <p class="hero-eyebrow">Тернопіль · Ручна робота · З любов'ю</p>
+    <h1>Торти що<br><em>зупиняють час</em></h1>
+    <p class="hero-sub">Авторська кондитерська — кожен десерт унікальний</p>
     <div class="hero-btns">
-      <a class="btn-primary" href="#contact">Замовити торт</a>
-      <a class="btn-outline" href="#gallery">Переглянути роботи</a>
+      <a class="btn-gold" href="#contact">Замовити торт</a>
+      <a class="btn-outline2" href="#gallery">Переглянути роботи</a>
+    </div>
+    <div class="scroll-hint">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
     </div>
   </section>
 
-  <!-- GALLERY -->
-  <section id="gallery">
-    <div class="container">
-      <p class="section-label">Мої роботи</p>
-      <h2 class="section-title">Кожен торт — окрема історія</h2>
-      <p class="section-sub">Ручна робота, натуральні інгредієнти, неповторний дизайн</p>
-      <div class="gallery-grid" id="galleryGrid">
-        <!-- Photos injected here -->
-        <div class="gallery-item"><div class="gallery-placeholder">Фото 1</div></div>
-        <div class="gallery-item"><div class="gallery-placeholder">Фото 2</div></div>
-        <div class="gallery-item"><div class="gallery-placeholder">Фото 3</div></div>
-        <div class="gallery-item"><div class="gallery-placeholder">Фото 4</div></div>
-        <div class="gallery-item"><div class="gallery-placeholder">Фото 5</div></div>
-        <div class="gallery-item"><div class="gallery-placeholder">Фото 6</div></div>
+  <!-- MARQUEE -->
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item">Весільні торти</span>
+      <span class="marquee-item">Капкейки</span>
+      <span class="marquee-item">Пряники</span>
+      <span class="marquee-item">Кекси</span>
+      <span class="marquee-item">Тернопіль</span>
+      <span class="marquee-item">Авторський дизайн</span>
+      <span class="marquee-item">Натуральні інгредієнти</span>
+      <span class="marquee-item">Весільні торти</span>
+      <span class="marquee-item">Капкейки</span>
+      <span class="marquee-item">Пряники</span>
+      <span class="marquee-item">Кекси</span>
+      <span class="marquee-item">Тернопіль</span>
+      <span class="marquee-item">Авторський дизайн</span>
+      <span class="marquee-item">Натуральні інгредієнти</span>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section class="about">
+    <div class="about-inner">
+      <div class="about-visual reveal">
+        <div class="placeholder-img">🎂</div>
+        <div class="about-float">
+          <span class="num">5+</span>
+          <span class="lbl">Років досвіду</span>
+        </div>
+      </div>
+      <div class="reveal" style="transition-delay:.15s">
+        <p class="s-label">Про мене</p>
+        <h2 class="s-title">Кожен торт — <em>мала</em> скульптура</h2>
+        <p class="s-sub">Я Тетяна — кондитер з Тернополя. Кожен виріб роблю вручну з натуральних інгредієнтів, вкладаючи в нього характер і настрій. Від весільного торта до маленького капкейка — якість однакова.</p>
+        <br/>
+        <p class="s-sub">Ціни обговорюємо індивідуально — залежно від складності та розміру.</p>
       </div>
     </div>
   </section>
 
   <!-- SERVICES -->
-  <section id="services">
-    <div class="container">
-      <p class="section-label">Що я роблю</p>
-      <h2 class="section-title">Солодкі радощі на будь-який випадок</h2>
+  <section class="services" id="services">
+    <div class="services-inner">
+      <p class="s-label reveal">Що я роблю</p>
+      <h2 class="s-title reveal" style="transition-delay:.1s">Солодкий <em>каталог</em></h2>
       <div class="services-grid">
-        <div class="service-card">
-          <div class="service-icon">💍</div>
+        <div class="s-card reveal tilt-card" style="transition-delay:.05s">
+          <span class="s-icon">💍</span>
           <h3>Весільні торти</h3>
-          <p>Розкішні багатоярусні торти для вашого особливого дня — унікальний дизайн під ваш стиль</p>
+          <p>Розкішні багатоярусні торти — унікальний дизайн під ваш стиль і тему свята</p>
         </div>
-        <div class="service-card">
-          <div class="service-icon">🧁</div>
+        <div class="s-card reveal tilt-card" style="transition-delay:.1s">
+          <span class="s-icon">🧁</span>
           <h3>Капкейки</h3>
           <p>Ніжні та красиві — ідеально для корпоративів, весіль і дитячих свят</p>
         </div>
-        <div class="service-card">
-          <div class="service-icon">🍪</div>
+        <div class="s-card reveal tilt-card" style="transition-delay:.15s">
+          <span class="s-icon">🍪</span>
           <h3>Пряники</h3>
           <p>Розписні пряники до будь-якого свята — Новий рік, Великдень, День народження</p>
         </div>
-        <div class="service-card">
-          <div class="service-icon">🍰</div>
+        <div class="s-card reveal tilt-card" style="transition-delay:.2s">
+          <span class="s-icon">🍰</span>
           <h3>Кекси</h3>
-          <p>Домашні кекси з натуральних інгредієнтів — з горіхами, ягодами та шоколадом</p>
+          <p>Домашні кекси з натуральних інгредієнтів — горіхи, ягоди, шоколад</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- HOW TO ORDER -->
-  <section id="order">
-    <div class="container">
-      <p class="section-label">Як замовити</p>
-      <h2 class="section-title">Три прості кроки</h2>
-      <div class="steps">
-        <div class="step">
-          <div class="step-num">1</div>
+  <!-- GALLERY -->
+  <section class="gallery" id="gallery">
+    <div class="gallery-inner">
+      <div class="gallery-header">
+        <div class="reveal">
+          <p class="s-label">Мої роботи</p>
+          <h2 class="s-title">Кожен торт — <em>окрема</em> історія</h2>
+        </div>
+        <a class="btn-outline2 reveal" href="https://www.instagram.com/tetyana_kolega/" target="_blank" style="transition-delay:.2s;align-self:flex-end">Більше в Instagram →</a>
+      </div>
+      <div class="gallery-grid reveal" style="transition-delay:.1s">
+        <div class="g-item">
+          <div class="ph">Фото 1</div>
+          <div class="g-overlay"><span>Весільний торт</span></div>
+        </div>
+        <div class="g-item">
+          <div class="ph">Фото 2</div>
+          <div class="g-overlay"><span>Капкейки</span></div>
+        </div>
+        <div class="g-item">
+          <div class="ph">Фото 3</div>
+          <div class="g-overlay"><span>Пряники</span></div>
+        </div>
+        <div class="g-item">
+          <div class="ph">Фото 4</div>
+          <div class="g-overlay"><span>Торт на замовлення</span></div>
+        </div>
+        <div class="g-item">
+          <div class="ph">Фото 5</div>
+          <div class="g-overlay"><span>Дитячий торт</span></div>
+        </div>
+        <div class="g-item">
+          <div class="ph">Фото 6</div>
+          <div class="g-overlay"><span>Кекси</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW -->
+  <section class="how" id="how">
+    <div class="how-inner">
+      <p class="s-label reveal">Як замовити</p>
+      <h2 class="s-title reveal" style="transition-delay:.1s">Три прості <em>кроки</em></h2>
+      <div class="steps-row reveal" style="transition-delay:.2s">
+        <div class="step-box">
+          <div class="step-num-big">01</div>
           <h3>Напишіть мені</h3>
-          <p>Опишіть що хочете — дату, кількість людей, смакові побажання і бюджет</p>
+          <p>Розкажіть про захід — дату, кількість гостей, смакові побажання і бюджет</p>
         </div>
-        <div class="step">
-          <div class="step-num">2</div>
-          <h3>Обговоримо деталі</h3>
-          <p>Разом підберемо дизайн, смак і оформлення — покажу варіанти і ціну</p>
+        <div class="step-box">
+          <div class="step-num-big">02</div>
+          <h3>Підберемо дизайн</h3>
+          <p>Разом обговоримо концепцію, смак і декор — покажу варіанти і узгоджуємо ціну</p>
         </div>
-        <div class="step">
-          <div class="step-num">3</div>
+        <div class="step-box">
+          <div class="step-num-big">03</div>
           <h3>Отримайте торт</h3>
-          <p>Забираєте готовий торт у призначений час — свіжий і красиво упакований</p>
+          <p>Забираєте готовий виріб у призначений час — свіжий і красиво упакований</p>
         </div>
       </div>
     </div>
   </section>
 
   <!-- CONTACT -->
-  <section id="contact">
-    <div class="container">
-      <div class="contact-box">
-        <h2>Готові замовити? Пишіть!</h2>
-        <p>Відповідаю швидко. Ціна обговорюється індивідуально. Приймаю замовлення по Тернополю.</p>
-        <div class="social-links">
-          <a class="social-btn" href="https://www.instagram.com/tetyana_kolega/" target="_blank">
-            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-            Instagram
-          </a>
-          <a class="social-btn" href="https://www.facebook.com/tetyana.kolega" target="_blank">
-            <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-            Facebook
-          </a>
-          <a class="social-btn" href="https://www.tiktok.com/@user4859751036158" target="_blank">
-            <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
-            TikTok
-          </a>
-        </div>
+  <section class="contact" id="contact">
+    <div class="contact-inner">
+      <h2 class="contact-title reveal">Готові створити<br><em>щось особливе?</em></h2>
+      <p class="contact-sub reveal" style="transition-delay:.15s">Пишіть — відповідаю швидко. Приймаю замовлення по Тернополю та з доставкою.</p>
+      <div class="socials reveal" style="transition-delay:.25s">
+        <a class="soc-btn" href="https://www.instagram.com/tetyana_kolega/" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          Instagram
+        </a>
+        <a class="soc-btn" href="https://www.facebook.com/tetyana.kolega" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+          Facebook
+        </a>
+        <a class="soc-btn" href="https://www.tiktok.com/@user4859751036158" target="_blank">
+          <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+          TikTok
+        </a>
       </div>
     </div>
   </section>
 
+  <!-- FOOTER -->
   <footer>
-    <p>© 2025 Тетяна Колега · Торти на замовлення · Тернопіль</p>
+    <span>© 2025 Тетяна Колега · Тернопіль</span>
+    <span>Торти на замовлення · <a href="https://www.instagram.com/tetyana_kolega/">@tetyana_kolega</a></span>
   </footer>
 
+  <script>
+    // ─── CURSOR ───
+    const cur = document.getElementById('cursor');
+    const ring = document.getElementById('cursor-ring');
+    let rx = 0, ry = 0, cx = 0, cy = 0;
+    document.addEventListener('mousemove', e => {
+      cx = e.clientX; cy = e.clientY;
+      cur.style.left = cx + 'px'; cur.style.top = cy + 'px';
+    });
+    function animRing() {
+      rx += (cx - rx) * .12; ry += (cy - ry) * .12;
+      ring.style.left = rx + 'px'; ring.style.top = ry + 'px';
+      requestAnimationFrame(animRing);
+    }
+    animRing();
+    document.querySelectorAll('a, button, .s-card').forEach(el => {
+      el.addEventListener('mouseenter', () => {
+        cur.style.width = '20px'; cur.style.height = '20px';
+        ring.style.width = '60px'; ring.style.height = '60px';
+        ring.style.transition = 'width .2s, height .2s';
+      });
+      el.addEventListener('mouseleave', () => {
+        cur.style.width = '12px'; cur.style.height = '12px';
+        ring.style.width = '40px'; ring.style.height = '40px';
+      });
+    });
+
+    // ─── CANVAS PARTICLES ───
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles = [];
+
+    function resize() {
+      W = canvas.width = window.innerWidth;
+      H = canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    class Particle {
+      constructor() { this.reset(); }
+      reset() {
+        this.x = Math.random() * W;
+        this.y = Math.random() * H;
+        this.r = Math.random() * 1.5 + .3;
+        this.vx = (Math.random() - .5) * .3;
+        this.vy = (Math.random() - .5) * .3;
+        this.alpha = Math.random() * .4 + .05;
+      }
+      update() {
+        this.x += this.vx; this.y += this.vy;
+        if (this.x < 0 || this.x > W || this.y < 0 || this.y > H) this.reset();
+      }
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.alpha;
+        ctx.fillStyle = '#c9956b';
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    for (let i = 0; i < 120; i++) particles.push(new Particle());
+
+    // connection lines
+    function drawLines() {
+      for (let i = 0; i < particles.length; i++) {
+        for (let j = i + 1; j < particles.length; j++) {
+          const dx = particles[i].x - particles[j].x;
+          const dy = particles[i].y - particles[j].y;
+          const d = Math.sqrt(dx*dx + dy*dy);
+          if (d < 100) {
+            ctx.save();
+            ctx.globalAlpha = (1 - d/100) * .06;
+            ctx.strokeStyle = '#c9956b';
+            ctx.lineWidth = .5;
+            ctx.beginPath();
+            ctx.moveTo(particles[i].x, particles[i].y);
+            ctx.lineTo(particles[j].x, particles[j].y);
+            ctx.stroke();
+            ctx.restore();
+          }
+        }
+      }
+    }
+
+    function loop() {
+      ctx.clearRect(0, 0, W, H);
+      particles.forEach(p => { p.update(); p.draw(); });
+      drawLines();
+      requestAnimationFrame(loop);
+    }
+    loop();
+
+    // ─── 3D TILT CARDS ───
+    document.querySelectorAll('.tilt-card').forEach(card => {
+      card.addEventListener('mousemove', e => {
+        const r = card.getBoundingClientRect();
+        const x = e.clientX - r.left - r.width/2;
+        const y = e.clientY - r.top - r.height/2;
+        const rx2 = -(y / r.height) * 14;
+        const ry2 = (x / r.width) * 14;
+        card.style.transform = `perspective(600px) rotateX(${rx2}deg) rotateY(${ry2}deg) translateZ(8px)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = '';
+      });
+    });
+
+    // ─── SCROLL REVEAL ───
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+    }, { threshold: .12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ─── NAV scroll effect ───
+    window.addEventListener('scroll', () => {
+      document.querySelector('nav').style.padding = window.scrollY > 80 ? '14px 48px' : '20px 48px';
+    });
+  </script>
 </body>
 </html>
