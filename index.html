@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Тетяна Колега — Торти на замовлення · Тернопіль</title>
+  <meta name="description" content="Авторські торти та десерти на замовлення у Тернополі. Кожен торт — ручна робота з любов'ю." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cream: #fdf6f0;
+      --blush: #f5ddd3;
+      --rose: #d4896a;
+      --dark-rose: #a85c3f;
+      --brown: #3d2214;
+      --text: #2d1a0e;
+      --text-light: #7a5c4a;
+      --white: #fff;
+      --radius: 16px;
+      --shadow: 0 4px 32px rgba(61,34,20,.10);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Nunito', sans-serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 24px;
+      background: rgba(253,246,240,.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(212,137,106,.15);
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--dark-rose);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 24px; list-style: none; }
+    .nav-links a { text-decoration: none; color: var(--text-light); font-size: .9rem; font-weight: 600; transition: color .2s; }
+    .nav-links a:hover { color: var(--rose); }
+    .nav-cta {
+      background: var(--rose); color: var(--white);
+      padding: 10px 20px; border-radius: 50px;
+      text-decoration: none; font-size: .9rem; font-weight: 600;
+      transition: background .2s, transform .15s;
+    }
+    .nav-cta:hover { background: var(--dark-rose); transform: translateY(-1px); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      text-align: center;
+      padding: 120px 24px 80px;
+      background:
+        linear-gradient(180deg, rgba(253,246,240,.15) 0%, rgba(253,246,240,.85) 60%, var(--cream) 100%),
+        url('photos/hero.jpg') center/cover no-repeat;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--blush);
+      color: var(--dark-rose);
+      padding: 6px 18px;
+      border-radius: 50px;
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 8vw, 5rem);
+      line-height: 1.15;
+      color: var(--brown);
+      margin-bottom: 20px;
+    }
+    .hero h1 em { color: var(--rose); font-style: italic; }
+    .hero p {
+      font-size: clamp(1rem, 3vw, 1.2rem);
+      color: var(--text-light);
+      max-width: 520px;
+      margin: 0 auto 36px;
+    }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+    .btn-primary {
+      background: var(--rose); color: var(--white);
+      padding: 16px 32px; border-radius: 50px;
+      text-decoration: none; font-size: 1rem; font-weight: 700;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      box-shadow: 0 4px 20px rgba(212,137,106,.35);
+    }
+    .btn-primary:hover { background: var(--dark-rose); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(212,137,106,.45); }
+    .btn-outline {
+      background: transparent; color: var(--rose);
+      padding: 16px 32px; border-radius: 50px;
+      text-decoration: none; font-size: 1rem; font-weight: 700;
+      border: 2px solid var(--rose);
+      transition: all .2s;
+    }
+    .btn-outline:hover { background: var(--rose); color: var(--white); }
+
+    /* ── SECTION BASE ── */
+    section { padding: 80px 24px; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-label {
+      font-size: .8rem; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--rose);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--brown);
+      margin-bottom: 16px;
+    }
+    .section-sub { color: var(--text-light); max-width: 560px; }
+
+    /* ── GALLERY ── */
+    #gallery { background: var(--white); }
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 48px;
+    }
+    .gallery-item {
+      border-radius: var(--radius);
+      overflow: hidden;
+      aspect-ratio: 4/5;
+      background: var(--blush);
+      position: relative;
+    }
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform .4s ease;
+    }
+    .gallery-item:hover img { transform: scale(1.04); }
+    .gallery-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--rose); font-size: .9rem; opacity: .5;
+    }
+
+    /* ── SERVICES ── */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 20px;
+      margin-top: 48px;
+    }
+    .service-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 32px 24px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .service-card:hover { transform: translateY(-4px); box-shadow: 0 8px 40px rgba(61,34,20,.14); }
+    .service-icon { font-size: 2.4rem; margin-bottom: 16px; }
+    .service-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.3rem; color: var(--brown); margin-bottom: 8px;
+    }
+    .service-card p { color: var(--text-light); font-size: .95rem; }
+
+    /* ── HOW TO ORDER ── */
+    #order { background: var(--blush); }
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 32px; margin-top: 48px; }
+    .step { text-align: center; }
+    .step-num {
+      width: 56px; height: 56px; border-radius: 50%;
+      background: var(--rose); color: var(--white);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .step h3 { font-size: 1.1rem; color: var(--brown); margin-bottom: 8px; }
+    .step p { color: var(--text-light); font-size: .9rem; }
+
+    /* ── CONTACT ── */
+    #contact { text-align: center; }
+    .contact-box {
+      background: var(--brown);
+      border-radius: 24px;
+      padding: 64px 32px;
+      color: var(--white);
+      margin-top: 48px;
+    }
+    .contact-box h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      margin-bottom: 16px;
+    }
+    .contact-box p { color: rgba(255,255,255,.7); margin-bottom: 36px; font-size: 1.05rem; }
+    .social-links { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .social-btn {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,.12);
+      color: var(--white);
+      padding: 14px 24px; border-radius: 50px;
+      text-decoration: none; font-weight: 600; font-size: .95rem;
+      border: 1px solid rgba(255,255,255,.2);
+      transition: background .2s, transform .15s;
+    }
+    .social-btn:hover { background: rgba(255,255,255,.22); transform: translateY(-2px); }
+    .social-btn svg { width: 20px; height: 20px; fill: currentColor; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 32px 24px;
+      color: var(--text-light); font-size: .85rem;
+      border-top: 1px solid var(--blush);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .hero { padding: 100px 20px 60px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <a class="nav-logo" href="#">Тетяна Колега 🎂</a>
+    <ul class="nav-links">
+      <li><a href="#gallery">Роботи</a></li>
+      <li><a href="#services">Що роблю</a></li>
+      <li><a href="#order">Як замовити</a></li>
+    </ul>
+    <a class="nav-cta" href="#contact">Замовити</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <span class="hero-badge">📍 Тернопіль · З любов'ю до деталей</span>
+    <h1>Торти що <em>вражають</em><br>з першого погляду</h1>
+    <p>Авторські торти на замовлення — для весіль, днів народження та будь-якого свята. Кожен торт унікальний.</p>
+    <div class="hero-btns">
+      <a class="btn-primary" href="#contact">Замовити торт</a>
+      <a class="btn-outline" href="#gallery">Переглянути роботи</a>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery">
+    <div class="container">
+      <p class="section-label">Мої роботи</p>
+      <h2 class="section-title">Кожен торт — окрема історія</h2>
+      <p class="section-sub">Ручна робота, натуральні інгредієнти, неповторний дизайн</p>
+      <div class="gallery-grid" id="galleryGrid">
+        <!-- Photos injected here -->
+        <div class="gallery-item"><div class="gallery-placeholder">Фото 1</div></div>
+        <div class="gallery-item"><div class="gallery-placeholder">Фото 2</div></div>
+        <div class="gallery-item"><div class="gallery-placeholder">Фото 3</div></div>
+        <div class="gallery-item"><div class="gallery-placeholder">Фото 4</div></div>
+        <div class="gallery-item"><div class="gallery-placeholder">Фото 5</div></div>
+        <div class="gallery-item"><div class="gallery-placeholder">Фото 6</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="container">
+      <p class="section-label">Що я роблю</p>
+      <h2 class="section-title">Солодкі радощі на будь-який випадок</h2>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">💍</div>
+          <h3>Весільні торти</h3>
+          <p>Розкішні багатоярусні торти для вашого особливого дня — унікальний дизайн під ваш стиль</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🧁</div>
+          <h3>Капкейки</h3>
+          <p>Ніжні та красиві — ідеально для корпоративів, весіль і дитячих свят</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🍪</div>
+          <h3>Пряники</h3>
+          <p>Розписні пряники до будь-якого свята — Новий рік, Великдень, День народження</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">🍰</div>
+          <h3>Кекси</h3>
+          <p>Домашні кекси з натуральних інгредієнтів — з горіхами, ягодами та шоколадом</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW TO ORDER -->
+  <section id="order">
+    <div class="container">
+      <p class="section-label">Як замовити</p>
+      <h2 class="section-title">Три прості кроки</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">1</div>
+          <h3>Напишіть мені</h3>
+          <p>Опишіть що хочете — дату, кількість людей, смакові побажання і бюджет</p>
+        </div>
+        <div class="step">
+          <div class="step-num">2</div>
+          <h3>Обговоримо деталі</h3>
+          <p>Разом підберемо дизайн, смак і оформлення — покажу варіанти і ціну</p>
+        </div>
+        <div class="step">
+          <div class="step-num">3</div>
+          <h3>Отримайте торт</h3>
+          <p>Забираєте готовий торт у призначений час — свіжий і красиво упакований</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="contact-box">
+        <h2>Готові замовити? Пишіть!</h2>
+        <p>Відповідаю швидко. Ціна обговорюється індивідуально. Приймаю замовлення по Тернополю.</p>
+        <div class="social-links">
+          <a class="social-btn" href="https://www.instagram.com/tetyana_kolega/" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            Instagram
+          </a>
+          <a class="social-btn" href="https://www.facebook.com/tetyana.kolega" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            Facebook
+          </a>
+          <a class="social-btn" href="https://www.tiktok.com/@user4859751036158" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+            TikTok
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Тетяна Колега · Торти на замовлення · Тернопіль</p>
+  </footer>
+
+</body>
+</html>
