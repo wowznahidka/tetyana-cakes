@@ -266,31 +266,25 @@
     .gallery-inner { max-width: 1200px; margin: 0 auto; }
     .gallery-header { display: flex; align-items: flex-end; justify-content: space-between; margin-bottom: 60px; flex-wrap: wrap; gap: 20px; }
     .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(12, 1fr);
-      grid-template-rows: repeat(2, 280px);
-      gap: 12px;
+      columns: 4;
+      column-gap: 12px;
     }
     .g-item {
       background: var(--c2); border-radius: 4px; overflow: hidden;
       position: relative; cursor: pointer;
+      break-inside: avoid;
+      margin-bottom: 12px;
       transition: transform .4s cubic-bezier(.25,.46,.45,.94);
     }
-    .g-item:hover { transform: scale(1.02); z-index: 2; }
-    .g-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .g-item:hover { transform: scale(1.02); }
+    .g-item img { width: 100%; height: auto; display: block; }
     .g-item .ph {
-      width: 100%; height: 100%;
+      width: 100%; aspect-ratio: 1;
       display: flex; align-items: center; justify-content: center;
       background: linear-gradient(135deg, var(--c2), rgba(61,31,8,.5));
       font-family: 'Cormorant Garamond', serif;
       font-size: 1rem; color: rgba(201,149,107,.4); letter-spacing: .1em;
     }
-    .g-item:nth-child(1) { grid-column: span 5; grid-row: span 2; }
-    .g-item:nth-child(2) { grid-column: span 4; }
-    .g-item:nth-child(3) { grid-column: span 3; }
-    .g-item:nth-child(4) { grid-column: span 3; }
-    .g-item:nth-child(5) { grid-column: span 4; }
-    .g-item:nth-child(6) { grid-column: span 3; }
     .g-overlay {
       position: absolute; inset: 0;
       background: linear-gradient(to top, rgba(26,10,0,.8) 0%, transparent 60%);
@@ -406,8 +400,7 @@
       .about-inner { grid-template-columns: 1fr; gap: 40px; }
       .services { padding: 80px 20px; }
       .gallery { padding: 80px 20px; }
-      .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
-      .g-item:nth-child(n) { grid-column: span 1 !important; grid-row: span 1 !important; }
+      .gallery-grid { columns: 2; }
       .how { padding: 80px 20px; }
       .steps-row { grid-template-columns: 1fr; }
       .step-box { border-right: none; border-bottom: 1px solid var(--glass-border); }
@@ -538,17 +531,13 @@
         <div class="g-item"><img src="photos/photo_4.jpg" alt="Львівський сирник" loading="lazy"/><div class="g-overlay"><span>Львівський сирник</span></div></div>
         <div class="g-item"><img src="photos/photo_5.jpg" alt="Домашня випічка" loading="lazy"/><div class="g-overlay"><span>Домашня випічка</span></div></div>
         <div class="g-item"><img src="photos/photo_6.jpg" alt="Сирно-макова вишиванка" loading="lazy"/><div class="g-overlay"><span>Сирно-макова вишиванка</span></div></div>
-      </div>
-
-      <!-- Extra gallery row -->
-      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:12px">
-        <div class="g-item" style="aspect-ratio:1"><img src="photos/photo_7.jpg" alt="Торт" loading="lazy"/><div class="g-overlay"><span>Святковий торт</span></div></div>
-        <div class="g-item" style="aspect-ratio:1"><img src="photos/photo_8.jpg" alt="Пляцки" loading="lazy"/><div class="g-overlay"><span>Пляцки</span></div></div>
-        <div class="g-item" style="aspect-ratio:1"><img src="photos/photo_9.jpg" alt="Різдвяна випічка" loading="lazy"/><div class="g-overlay"><span>Різдвяна випічка</span></div></div>
-        <div class="g-item" style="aspect-ratio:1"><img src="photos/photo_10.jpg" alt="Десерт" loading="lazy"/><div class="g-overlay"><span>Авторський десерт</span></div></div>
-        <div class="g-item" style="aspect-ratio:1"><img src="photos/photo_11.jpg" alt="Торти" loading="lazy"/><div class="g-overlay"><span>Торти на замовлення</span></div></div>
-        <div class="g-item" style="aspect-ratio:1"><img src="photos/photo_12.jpg" alt="Виріб" loading="lazy"/><div class="g-overlay"><span>Ексклюзивний дизайн</span></div></div>
-        <div class="g-item" style="aspect-ratio:1"><img src="photos/photo_13.jpg" alt="Кекси" loading="lazy"/><div class="g-overlay"><span>Домашні кекси</span></div></div>
+        <div class="g-item"><img src="photos/photo_7.jpg" alt="Святковий торт" loading="lazy"/><div class="g-overlay"><span>Святковий торт</span></div></div>
+        <div class="g-item"><img src="photos/photo_8.jpg" alt="Пляцки" loading="lazy"/><div class="g-overlay"><span>Пляцки</span></div></div>
+        <div class="g-item"><img src="photos/photo_9.jpg" alt="Різдвяна випічка" loading="lazy"/><div class="g-overlay"><span>Різдвяна випічка</span></div></div>
+        <div class="g-item"><img src="photos/photo_10.jpg" alt="Авторський десерт" loading="lazy"/><div class="g-overlay"><span>Авторський десерт</span></div></div>
+        <div class="g-item"><img src="photos/photo_11.jpg" alt="Торти на замовлення" loading="lazy"/><div class="g-overlay"><span>Торти на замовлення</span></div></div>
+        <div class="g-item"><img src="photos/photo_12.jpg" alt="Ексклюзивний дизайн" loading="lazy"/><div class="g-overlay"><span>Ексклюзивний дизайн</span></div></div>
+        <div class="g-item"><img src="photos/photo_13.jpg" alt="Домашні кекси" loading="lazy"/><div class="g-overlay"><span>Домашні кекси</span></div></div>
       </div>
     </div>
   </section>
