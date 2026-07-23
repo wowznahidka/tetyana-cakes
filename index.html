@@ -73,11 +73,12 @@
     .burger {
       display: flex; flex-direction: column; gap: 5px;
       background: none; border: none; cursor: pointer; padding: 4px;
+      min-width: 44px; min-height: 44px; align-items: center; justify-content: center;
     }
     .burger span { display: block; width: 24px; height: 2px; background: rgba(253,246,238,.75); transition: all .3s; }
     .mobile-menu {
       display: none; position: fixed; inset: 0; background: var(--c1);
-      z-index: 999; flex-direction: column; justify-content: center; align-items: center; gap: 36px;
+      z-index: 100003; flex-direction: column; justify-content: center; align-items: center; gap: 36px;
     }
     .mobile-menu.open { display: flex; }
     .mobile-menu a {
@@ -86,8 +87,9 @@
     }
     .mobile-menu a:hover { color: #fff; }
     .mm-close {
-      position: absolute; top: 24px; right: 6%; font-size: 32px;
+      position: absolute; top: 12px; right: 12px; font-size: 32px;
       color: rgba(253,246,238,.4); background: none; border: none; cursor: pointer; line-height: 1;
+      min-width: 44px; min-height: 44px; display: flex; align-items: center; justify-content: center;
     }
 
     /* ─── ROLLING PIN ─── */
