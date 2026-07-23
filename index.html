@@ -618,9 +618,12 @@
       .contact { padding: 80px 20px; }
       footer { flex-direction: column; gap: 12px; text-align: center; padding: 32px 20px; }
     }
+    /* scroll progress */
+    #scroll-prog{position:fixed;top:0;left:0;height:2px;width:0%;background:linear-gradient(90deg,#c9956b,#e8c4a0);z-index:10000;transition:width .1s linear;pointer-events:none}
   </style>
 </head>
 <body>
+  <div id="scroll-prog" aria-hidden="true"></div>
 
   <!-- Custom Cursor -->
   <div id="cursor"></div>
@@ -999,5 +1002,13 @@
 </div>
 <div style="text-align:center;font-size:11px;opacity:.55;padding:6px 12px 64px;font-family:sans-serif">Ім'я, місто та контакти на цьому сайті — приклад наповнення. Фото робіт — реальні.</div>
 <!-- /wow-order-banner -->
+<script>
+(function(){
+  var el=document.getElementById('scroll-prog');
+  if(!el)return;
+  function upd(){var d=document.documentElement,pct=(d.scrollTop||document.body.scrollTop)/(d.scrollHeight-d.clientHeight)*100;el.style.width=Math.min(100,pct)+'%'}
+  window.addEventListener('scroll',upd,{passive:true});
+})();
+</script>
 </body>
 </html>
